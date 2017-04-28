@@ -163,9 +163,7 @@ data FingerTree v a
     = Empty
     | Single !a
     | Deep !v !(Digit a) !(FingerTree v (Node v a)) !(Digit a)
-#if TESTING
     deriving (Show)
-#endif
 
 deep ::  (Measured v a) =>
      Digit a -> FingerTree v (Node v a) -> Digit a -> FingerTree v a
@@ -189,11 +187,9 @@ instance Eq a => Eq (FingerTree v a) where
 instance Ord a => Ord (FingerTree v a) where
     compare xs ys = compare (toList xs) (toList ys)
 
-#if !TESTING
-instance Show a => Show (FingerTree v a) where
-    showsPrec p xs = showParen (p > 10) $
-        showString "fromList " . shows (toList xs)
-#endif
+-- instance Show a => Show (FingerTree v a) where
+--     showsPrec p xs = showParen (p > 10) $
+--         showString "fromList " . shows (toList xs)
 
 -- | Like 'fmap', but with a more constrained type.
 fmap' :: (Measured v1 a1, Measured v2 a2) =>
